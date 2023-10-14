@@ -27,9 +27,11 @@ class TodoRepositoryImpl implements TodoItemRepository {
   ];
 
   @override
-  Future<Either<String, TodoModel>> createTodoItem(TodoEntity todo) async {
-    todos.add(todo.copyWith(id: todos.map((e) => e.id).reduce(max) + 1));
-    return Future.value(Right(TodoModel.fromEntity(todo)));
+  Future<Either<String, TodoEntity>> createTodoItem(TodoEntity todo) async {
+    final todoModel = TodoModel.fromEntity(todo)
+        .copyWith(id: todos.map((e) => e.id).reduce(max) + 1);
+    todos.add(todoModel);
+    return Future.value(Right(todoModel));
   }
 
   @override
